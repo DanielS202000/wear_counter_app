@@ -17,14 +17,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
         primaryColor: Colors.indigo,
-        textTheme: 
-        const TextTheme(
-          headlineSmall: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold),
+        textTheme: const TextTheme(
+          headlineSmall:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           bodyMedium: TextStyle(
             color: Color.fromARGB(255, 127, 186, 243),
-          ),           
+          ),
+          bodySmall: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.bold
+            ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            //backgroundColor: Colors.indigo,
+            //foregroundColor: Colors.white,
+          ),
         ),
         useMaterial3: true,
       ),
