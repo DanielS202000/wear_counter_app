@@ -16,6 +16,16 @@ class _StartScreenState extends State<StartScreen> {
 
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 20.0,
+        centerTitle: false,
+        leadingWidth: 0,
+        title: Text(
+          'HI WATER',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        //actions: []
+        ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -36,7 +46,7 @@ class _StartScreenState extends State<StartScreen> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
-          'Faltan 250 mL',
+          'Faltan 2500 mL',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
@@ -130,9 +140,15 @@ class _StartScreenState extends State<StartScreen> {
 
   Widget _buttonReg() {
     return Center(
-      child: ElevatedButton(
-        onPressed: () {},
-        child: const Text('Registrar'),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints.tightFor(
+          width: 88,
+          height: 30,
+        ),
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Text('Registrar'),
+        ),
       ),
     );
   }
