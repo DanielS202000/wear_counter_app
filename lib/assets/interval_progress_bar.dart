@@ -1,13 +1,43 @@
 import 'package:flutter/material.dart';
 
 class IntervalProgressBar extends StatefulWidget {
-  const IntervalProgressBar({Key? key}) : super(key: key);
+  final int value;
+
+  const IntervalProgressBar({Key? key, required this.value}) : super(key: key);
 
   @override
   State<IntervalProgressBar> createState() => _IntervalProgressBarState();
 }
 
 class _IntervalProgressBarState extends State<IntervalProgressBar> {
+  List <Color> darkColors = [
+    const Color.fromARGB(255, 22, 45, 67),
+    const Color.fromARGB(255, 28, 55, 53),
+    const Color.fromARGB(255, 33, 59, 34),
+    const Color.fromARGB(255, 42, 59, 17),
+    const Color.fromARGB(255, 50, 59, 18),
+    const Color.fromARGB(255, 63, 60, 21),
+    const Color.fromARGB(255, 71, 57, 9),
+    const Color.fromARGB(255, 75, 51, 9),
+    const Color.fromARGB(255, 77, 40, 15),
+    const Color.fromARGB(255, 71, 29, 23),
+  ];
+
+  List  <Color> brightColors = [
+    const Color.fromARGB(255, 0, 255, 255),
+    const Color.fromARGB(255, 0, 255, 157),
+    const Color.fromARGB(255, 0, 255, 85),
+    const Color.fromARGB(255, 30, 255, 0),
+    const Color.fromARGB(255, 94, 255, 0),
+    const Color.fromARGB(255, 123, 255, 0),
+    const Color.fromARGB(255, 238, 255, 0),
+    const Color.fromARGB(255, 209, 178, 0),
+    const Color.fromARGB(255, 197, 79, 0),
+    const Color.fromARGB(255, 255, 0, 0),
+
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,27 +52,34 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
   }
 
   Widget _bar() {
+    List <Color> actualColors;
+    if(widget.value == 0){
+      actualColors = darkColors;
+    }
+    else{
+      actualColors = brightColors;
+    }
     return Column(
       children: [
-        _interval(customColor: const Color.fromARGB(255, 0, 255, 255)),
+        _interval(customColor: actualColors[0]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 0, 255, 157)),
+        _interval(customColor: actualColors[1]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 0, 255, 85)),
+        _interval(customColor: actualColors[2]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 30, 255, 0)),
+        _interval(customColor: actualColors[3]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 94, 255, 0)),
+        _interval(customColor: actualColors[4]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 123, 255, 0)),
+        _interval(customColor: actualColors[5]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 238, 255, 0)),
+        _interval(customColor: actualColors[6]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 209, 178, 0)),
+        _interval(customColor: actualColors[7]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 197, 79, 0)),
+        _interval(customColor: actualColors[8]),
         _separator(),
-        _interval(customColor: const Color.fromARGB(255, 255, 0, 0)),
+        _interval(customColor: actualColors[9]),
 
         // _interval(customColor: const Color.fromARGB(255, 66, 144, 255)),
         // _separator(),

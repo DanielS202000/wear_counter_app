@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:water_counter_app/assets/interval_progress_bar.dart';
 
 class StartScreen extends StatefulWidget {
@@ -17,33 +18,56 @@ class _StartScreenState extends State<StartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 20.0,
-        centerTitle: false,
-        leadingWidth: 0,
-        title: Text(
+        toolbarHeight: 16.0,
+        leadingWidth: 100,
+        leading: Text(
           'HI WATER',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
+        actions: [
+          _hour(),
+        ],
         //actions: []
         ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _totalM(),
-          _indicators(),
-          _buttonReg(),
+      body: SizedBox(
+        height: 155.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _totalM(),
+            _verticalGap(),
+            _indicators(),
+            _verticalGap(),
+            _buttonReg(),
 
-        ],
+          ],
+        ),
       ),
     );
   }
 
+  Widget _hour(){
+    String formattedTime = DateFormat.Hm().format(DateTime.now());
+    return Text(
+      formattedTime,
+      style: Theme.of(context).textTheme.bodySmall,
+    );
+  }
+
+  Widget _verticalGap(){
+    return const SizedBox(
+      height: 4.0,
+    );
+  }
   Widget _totalM() {
     return Column(
       children: [
-        Text(
-          '0 mL',
-          style: Theme.of(context).textTheme.headlineSmall,
+        SizedBox(
+          height: 25.0,
+          child: Text(
+            '0 mL',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
         Text(
           'Faltan 2500 mL',
@@ -120,7 +144,7 @@ class _StartScreenState extends State<StartScreen> {
     return Column(
       children: [
         
-        const IntervalProgressBar(),
+        const IntervalProgressBar(value: 0),
         //_intervalBar(),
 
         Text(
