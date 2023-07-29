@@ -76,13 +76,14 @@ class DrinksScreen extends StatelessWidget {
         mainAxisSpacing: 5,
         crossAxisCount: 2,
         children: [
-          _oneCard(context),
-          _oneCard(context),
-          _oneCard(context),
-          _oneCard(context),
-          _oneCard(context),
-          _oneCard(context),
-          _oneCard(context),
+          _oneCard(context, 0),
+          _oneCard(context, 1),
+          _oneCard(context, 2),
+          _oneCard(context, 3),
+          _oneCard(context, 4),
+          _oneCard(context, 5),
+          _oneCard(context, 6),
+          _oneCard(context, 7),
         ],
         //List.generate(6, (index){
         //   return Center(
@@ -104,37 +105,47 @@ class DrinksScreen extends StatelessWidget {
     );
   }
 
-  Widget _oneCard(BuildContext context) {
+  Widget _oneCard(BuildContext context, int type) {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
       },
-      child: //SizedBox(
-          //width: 50.0,
-          // height: 500.0,
-          //child:
-          Card(
-        elevation: 10.0,
-        color: const Color.fromARGB(255, 22, 45, 67),
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: Color.fromARGB(255, 22, 45, 67),
+      child: Center(
+        child: SizedBox(
+          width: 100.0,
+          height: 60.0,
+          child: Card(
+            elevation: 10.0,
+            color: typesOfDrinks[type][2],
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: typesOfDrinks[type][2],
+              ),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  typesOfDrinks[type][0],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: typesOfDrinks[type][3],
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  typesOfDrinks[type][1],
+                  style: TextStyle(
+                    color: typesOfDrinks[type][3],
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '250 ml',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Text(
-              'Un vaso de agua',
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
         ),
       ),
     );
