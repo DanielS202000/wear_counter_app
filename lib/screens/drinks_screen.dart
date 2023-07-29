@@ -66,7 +66,7 @@ class DrinksScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall,
         ),
         actions: [
-          _hour(context),
+          hour(context),
         ],
       ),
       body: GridView.count(
@@ -96,39 +96,45 @@ class DrinksScreen extends StatelessWidget {
     );
   }
 
+  Widget hour(BuildContext context) {
+    String formattedTime = DateFormat.Hm().format(DateTime.now());
+    return Text(
+      formattedTime,
+      style: Theme.of(context).textTheme.bodySmall,
+    );
+  }
+
   Widget _oneCard(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
       },
-      child: Center(
-        child: SizedBox(
-          width: 100.0,
-          height: 60.0,
-          child: Card(
-            elevation: 10.0,
-            color: const Color.fromARGB(255, 22, 45, 67),
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(
-                color: Color.fromARGB(255, 22, 45, 67),
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '250 ml',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Text(
-                  'Agua',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+      child: //SizedBox(
+          //width: 50.0,
+          // height: 500.0,
+          //child:
+          Card(
+        elevation: 10.0,
+        color: const Color.fromARGB(255, 22, 45, 67),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: Color.fromARGB(255, 22, 45, 67),
           ),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '250 ml',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Text(
+              'Un vaso de agua',
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
