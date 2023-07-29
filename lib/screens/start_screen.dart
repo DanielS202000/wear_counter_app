@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:water_counter_app/assets/interval_progress_bar.dart';
@@ -11,12 +12,8 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 16.0,
@@ -29,7 +26,7 @@ class _StartScreenState extends State<StartScreen> {
           _hour(),
         ],
         //actions: []
-        ),
+      ),
       body: SizedBox(
         height: 155.0,
         child: Column(
@@ -40,26 +37,30 @@ class _StartScreenState extends State<StartScreen> {
             _indicators(),
             _verticalGap(),
             _buttonReg(),
-
           ],
         ),
       ),
     );
   }
 
-  Widget _hour(){
-    String formattedTime = DateFormat.Hm().format(DateTime.now());
-    return Text(
-      formattedTime,
-      style: Theme.of(context).textTheme.bodySmall,
+  Widget _hour() {
+    return StreamBuilder(
+      stream: Stream.periodic(const Duration(seconds: 1)),
+      builder: (context, snapshot) {
+        return Text(
+          DateFormat.Hm().format(DateTime.now()),
+          style: Theme.of(context).textTheme.bodySmall,
+        );
+      },
     );
   }
 
-  Widget _verticalGap(){
+  Widget _verticalGap() {
     return const SizedBox(
       height: 4.0,
     );
   }
+
   Widget _totalM() {
     return Column(
       children: [
@@ -141,10 +142,9 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
-  Widget _hydration(){
+  Widget _hydration() {
     return Column(
       children: [
-        
         const IntervalProgressBar(value: 0),
         //_intervalBar(),
 
@@ -174,7 +174,7 @@ class _StartScreenState extends State<StartScreen> {
           onPressed: () {
             Navigator.push(
               context,
-            MaterialPageRoute(builder: (context) =>  DrinksScreen()),
+              MaterialPageRoute(builder: (context) => DrinksScreen()),
             );
           },
           child: const Text('Registrar'),

@@ -61,9 +61,14 @@ class DrinksScreen extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 16.0,
         leadingWidth: 100,
-        leading: Text(
-          'Cancelar',
-          style: Theme.of(context).textTheme.bodySmall,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Cancel',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ),
         actions: [
           hour(context),
@@ -98,10 +103,14 @@ class DrinksScreen extends StatelessWidget {
   }
 
   Widget hour(BuildContext context) {
-    String formattedTime = DateFormat.Hm().format(DateTime.now());
-    return Text(
-      formattedTime,
-      style: Theme.of(context).textTheme.bodySmall,
+    return StreamBuilder(
+      stream: Stream.periodic(const Duration(seconds: 1)),
+      builder: (context, snapshot) {
+        return Text(
+          DateFormat.Hm().format(DateTime.now()),
+          style: Theme.of(context).textTheme.bodySmall,
+        );
+      },
     );
   }
 
@@ -113,7 +122,7 @@ class DrinksScreen extends StatelessWidget {
       child: Center(
         child: SizedBox(
           width: 100.0,
-          height: 60.0,
+          //height: 60.0,
           child: Card(
             elevation: 10.0,
             color: typesOfDrinks[type][2],
