@@ -5,13 +5,22 @@ import 'package:water_counter_app/assets/interval_progress_bar.dart';
 import 'package:water_counter_app/screens/drinks_screen.dart';
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+  final double hidratacion;
+  final int valueWater;
+  const StartScreen(
+      {Key? key, required this.hidratacion, required this.valueWater})
+      : super(key: key);
+  final int totalValue = 2550;
 
   @override
   State<StartScreen> createState() => _StartScreenState();
 }
 
 class _StartScreenState extends State<StartScreen> {
+  get valueWater => widget.valueWater;
+  get totalValue => widget.totalValue;
+  get hidratacion => widget.hidratacion;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +76,12 @@ class _StartScreenState extends State<StartScreen> {
         SizedBox(
           height: 25.0,
           child: Text(
-            '0 mL',
+            valueWater.toString(),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         Text(
-          'Faltan 2500 mL',
+          'Faltan ${totalValue - valueWater <= 0 ? 0 : totalValue - valueWater} ml',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
@@ -100,32 +109,27 @@ class _StartScreenState extends State<StartScreen> {
 
   Widget _percentage() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          height: 60,
           child: Stack(
             alignment: Alignment.center,
             children: [
-              const SizedBox(
-                width: 45,
-                height: 45,
-                child: CircularProgressIndicator(
-                  strokeWidth: 6,
-                  value: 0.3,
-                  color: Color.fromARGB(255, 62, 139, 236),
-                  backgroundColor: Color.fromARGB(255, 17, 50, 74),
-                ),
+              CircularProgressIndicator(
+                strokeWidth: 6,
+                value: valueWater * 100 / totalValue / 100,
+                color: const Color.fromARGB(255, 19, 149, 235),
+                backgroundColor: const Color.fromARGB(58, 88, 88, 88),
               ),
               Text(
-                '100 %',
+                '${valueWater * 100 ~/ totalValue >= 100 ? 100 : valueWater * 100 ~/ totalValue}%',
                 style: Theme.of(context).textTheme.bodySmall,
-                textAlign: TextAlign.center,
               ),
             ],
           ),
         ),
         Text(
-          'Hoy',
+          DateTime.now().toString().split(' ')[0],
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
@@ -145,7 +149,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget _hydration() {
     return Column(
       children: [
-        const IntervalProgressBar(value: 0),
+        IntervalProgressBar(value: hidratacion),
         //_intervalBar(),
 
         Text(
@@ -167,14 +171,14 @@ class _StartScreenState extends State<StartScreen> {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints.tightFor(
-          width: 88,
-          height: 30,
+          width: 104,
+          height: 27,
         ),
         child: ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DrinksScreen()),
+              MaterialPageRoute(builder: (context) => DrinksScreen(hidratacion: hidratacion, valueWater: valueWater,)),
             );
           },
           child: const Text('Registrar'),

@@ -1,57 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:water_counter_app/screens/start_screen.dart';
 
 class DrinksScreen extends StatelessWidget {
-  DrinksScreen({Key? key}) : super(key: key);
 
+  final double hidratacion;
+  final int valueWater;
+   DrinksScreen({Key? key, required this.hidratacion, required this.valueWater}) : super(key: key);
   final List<dynamic> typesOfDrinks = [
     [
-      '240 mL',
+      240,
       'Un vaso de agua',
       const Color.fromARGB(255, 26, 49, 70),
-      const Color.fromARGB(255, 139, 215, 255)
+      const Color.fromARGB(255, 139, 215, 255), .5
     ],
     [
-      '550 mL',
+      550,
       'Una botella de agua',
       const Color.fromARGB(255, 26, 49, 70),
-      const Color.fromARGB(255, 139, 215, 255)
+      const Color.fromARGB(255, 139, 215, 255), 1
     ],
     [
-      '240 mL',
+      240,
       'Una taza de té',
       const Color.fromARGB(255, 67, 47, 19),
-      const Color.fromARGB(255, 255, 207, 115)
+      const Color.fromARGB(255, 255, 207, 115), .5
     ],
     [
-      '250 mL',
+      250,
       'Un vaso de leche',
       const Color.fromARGB(255, 54, 34, 69),
-      const Color.fromARGB(255, 230, 164, 255)
+      const Color.fromARGB(255, 230, 164, 255), .7
     ],
     [
-      '200 mL',
+      200,
       'Una taza de café',
       const Color.fromARGB(255, 67, 47, 19),
-      const Color.fromARGB(255, 255, 207, 115)
+      const Color.fromARGB(255, 255, 207, 115), .2
     ],
     [
-      '200 mL',
+      200,
       'Leche saborizada',
       const Color.fromARGB(255, 64, 31, 44),
-      const Color.fromARGB(255, 255, 157, 200)
+      const Color.fromARGB(255, 255, 157, 200), .5
     ],
     [
-      '200 mL',
+      200,
       'Un vaso de refresco',
       const Color.fromARGB(255, 32, 29, 69),
-      const Color.fromARGB(255, 159, 147, 255)
+      const Color.fromARGB(255, 159, 147, 255), .2
     ],
     [
-      '200 mL',
+      200,
       'Leche desnatada',
       const Color.fromARGB(255, 71, 59, 24),
-      const Color.fromARGB(255, 255, 249, 130)
+      const Color.fromARGB(255, 255, 249, 130), .3
     ],
   ];
 
@@ -61,17 +64,20 @@ class DrinksScreen extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 16.0,
         leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
+        leading: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+          ),
+          onPressed: () {
+              Navigator.pop(context);
+            },
           child: Text(
-            'Cancel',
+            'Cancelar',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
         actions: [
-          hour(context),
+          _hour(context),
         ],
       ),
       body: GridView.count(
@@ -102,7 +108,7 @@ class DrinksScreen extends StatelessWidget {
     );
   }
 
-  Widget hour(BuildContext context) {
+  Widget _hour(BuildContext context) {
     return StreamBuilder(
       stream: Stream.periodic(const Duration(seconds: 1)),
       builder: (context, snapshot) {
@@ -115,9 +121,14 @@ class DrinksScreen extends StatelessWidget {
   }
 
   Widget _oneCard(BuildContext context, int type) {
+    double newH = hidratacion + typesOfDrinks[type][4];
+    double newVW = valueWater.toDouble() + typesOfDrinks[type][0];
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => StartScreen(
+          hidratacion: newH,
+              valueWater: newVW.toInt(),
+            )), (route) => false);
       },
       child: Center(
         child: SizedBox(
@@ -130,13 +141,13 @@ class DrinksScreen extends StatelessWidget {
               side: BorderSide(
                 color: typesOfDrinks[type][2],
               ),
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(10.0),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  typesOfDrinks[type][0],
+                  '${typesOfDrinks[type][0]} ml',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

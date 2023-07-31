@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class IntervalProgressBar extends StatefulWidget {
-  final int value;
+  final double value;
 
   const IntervalProgressBar({Key? key, required this.value}) : super(key: key);
 
@@ -10,7 +10,8 @@ class IntervalProgressBar extends StatefulWidget {
 }
 
 class _IntervalProgressBarState extends State<IntervalProgressBar> {
-  List <Color> darkColors = [
+  double get value => widget.value;
+  List<Color> darkColors = [
     const Color.fromARGB(255, 22, 45, 67),
     const Color.fromARGB(255, 28, 55, 53),
     const Color.fromARGB(255, 33, 59, 34),
@@ -23,7 +24,7 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
     const Color.fromARGB(255, 71, 29, 23),
   ];
 
-  List  <Color> brightColors = [
+  List<Color> brightColors = [
     const Color.fromARGB(255, 0, 255, 255),
     const Color.fromARGB(255, 0, 255, 157),
     const Color.fromARGB(255, 0, 255, 85),
@@ -34,8 +35,6 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
     const Color.fromARGB(255, 209, 178, 0),
     const Color.fromARGB(255, 197, 79, 0),
     const Color.fromARGB(255, 255, 0, 0),
-
-
   ];
 
   @override
@@ -52,11 +51,19 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
   }
 
   Widget _bar() {
-    List <Color> actualColors;
-    if(widget.value == 0){
+    List<Color> actualColors = [];
+    if (widget.value == 0) {
       actualColors = darkColors;
+    } else {
+      for (int i = 0; i < brightColors.length; i++) {
+        if (10 / value <= i.toDouble()) {
+          actualColors.add(brightColors[i]);
+        } else {
+          actualColors.add(darkColors[i]);
+        }
+      }
     }
-    else{
+    if (value >= 5) {
       actualColors = brightColors;
     }
     return Column(
@@ -100,15 +107,13 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
         // _interval(customColor: const Color.fromARGB(255, 235, 138, 0)),
         // _separator(),
         // _interval(customColor: const Color.fromARGB(255, 255, 0, 0)),
-        
-        
       ],
     );
   }
 
   Widget _interval({required Color customColor}) {
     return SizedBox(
-      width:15.0,
+      width: 15.0,
       height: 3.8,
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -118,7 +123,7 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
     );
   }
 
-  Widget _separator(){
+  Widget _separator() {
     return const SizedBox(
       height: 2.2,
     );
@@ -126,12 +131,14 @@ class _IntervalProgressBarState extends State<IntervalProgressBar> {
 
   Widget _label() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(
           height: 30.0,
         ),
         Text(
-          '1.0',
+          '${value >= 5 ? 5 : value.toStringAsFixed(1)}',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ],
